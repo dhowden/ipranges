@@ -1,8 +1,8 @@
 # ipranges tool
 
-This tool fetches the IP ranges used by GCP compute.
+Google Cloud publishes a JSON-formatted list of customer-usable global and regional external IP address ranges here: https://www.gstatic.com/ipranges/cloud.json.
 
-Google publishes the raw data here: https://cloud.google.com/compute/docs/faq#find_ip_range.
+This tool fetches that data and provides filtering by region prefix, and other useful options (IPv6, IPv4 etc).
 
 ## Installing the tool
 
@@ -22,7 +22,7 @@ Usage of ipranges:
         only list regions
 ```
 
-## Fetch the regions
+## List the regions
 
 ```console
 $ ipranges -regions
@@ -30,51 +30,41 @@ asia-east1
 asia-east2
 asia-northeast1
 asia-northeast2
-asia-northeast3
-asia-south1
-asia-south2
-asia-southeast1
-asia-southeast2
-australia-southeast1
-australia-southeast2
-europe-central2
-europe-north1
-europe-southwest1
-europe-west1
-europe-west2
-europe-west3
-europe-west4
-europe-west6
-europe-west8
-europe-west9
-global
-northamerica-northeast1
-northamerica-northeast2
-southamerica-east1
-southamerica-west1
-us-central1
-us-central2
-us-east1
-us-east4
-us-east5
-us-east7
-us-south1
-us-west1
-us-west2
-us-west3
-us-west4
+...
 ```
 
-# Fetch IPs for a specific region
+## List IP ranges for specific region prefixes
+
+For the `us-central2` region:
 
 ```console
 $ ipranges -region us-central2
-35.186.0.0/17
-35.186.128.0/20
-35.206.32.0/19
-35.220.46.0/24
-35.242.46.0/24
 107.167.160.0/20
 108.59.88.0/21
-173.255.120.0/21
+...
+```
+
+For all `us-central` regions:
+
+```console
+$ ipranges -region us-central
+104.154.113.0/24
+104.154.114.0/23
+...
+```
+
+Exclude IPv6 addresses:
+
+```console
+$ ipranges -region us-central2 -ipv6=false
+107.167.160.0/20
+108.59.88.0/21
+...
+```
+
+Exclude IPv4 addresses
+
+```console
+$ ipranges -region us-central2 -ipv4=false
+2600:1900:4070::/44
 ```
